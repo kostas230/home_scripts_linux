@@ -1,7 +1,7 @@
 export LC_CTYPE="en_US.UTF-8"
 setxkbmap -layout us,gr -option grp:win_space_toggle &
 xrdb -merge ~/.Xresources &
-exec sh ~/.config/set_wallpaper.sh &
+% exec sh ~/.config/set_wallpaper.sh &
 telegram-desktop &
 xscreensaver -no-splash &
 urxvtd -q -o -f &
