@@ -6,7 +6,7 @@ git clone https://aur.archlinux.org/cwm.git
 git clone https://aur.archlinux.org/nordvpn-bin.git
 git clone https://aur.archlinux.org/skypeforlinux-stable-bin.git
 git clone https://aur.archlinux.org/zoom.git
-git clone https://aur.archlinux.org/streamio
+git clone https://aur.archlinux.org/streamio.git
 
 cd ~/.src/cwm
 makepkg -si
