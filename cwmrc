@@ -103,6 +103,16 @@ bind-key	MC-Right		window-resize-right-big
 bind-key	MC-Left			window-resize-left-big
 
 # =================
+# Audio control 
+# =================
+bind-key	XF86AudioRaiseVolume	'sh -c "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume @DEFAULT_SINK@ +5%"'
+bind-key	XF86AudioLowerVolume	'sh -c "pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume @DEFAULT_SINK@ -5%"'
+bind-key	XF86AudioMute		'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+bind-key	XF86AudioMicMute	'pactl set-source-mute 1 toggle'
+bind-key	XF86MonBrightnessUp	'xbacklight -inc +5' 
+bind-key	XF86MonBrightnessDown	'xbacklight -inc -5'
+
+# =================
 # CWM key functions
 # =================
 
@@ -124,6 +134,7 @@ bind-key	4-Return		'xterm -fa "Ubuntu Mono" -fs 11'
 
 # Win-b spawns browser
 bind-key	4-b			firefox
+bind-key	4S-b			tor-browser
 
 # Win-v spanws vim
 bind-key	4-v			'xterm -e vim'
