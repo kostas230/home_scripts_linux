@@ -1,6 +1,7 @@
 #!/bin/sh
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 ln -sf ~/.config/home_scripts/xinitrc ~/.xinitrc
 ln -sf ~/.config/home_scripts/xinitrc ~/.xsession
