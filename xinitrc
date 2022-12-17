@@ -6,4 +6,5 @@ tint2 &
 telegram-desktop &
 signal-desktop &
 thunderbird & 
+nordvpn c & 
 cwm
