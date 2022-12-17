@@ -1,4 +1,7 @@
 #!/bin/sh
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 ln -sf ~/.config/home_scripts/xinitrc ~/.xinitrc
 ln -sf ~/.config/home_scripts/xinitrc ~/.xsession
 ln -sf ~/.config/home_scripts/zprofile ~/.zprofile
