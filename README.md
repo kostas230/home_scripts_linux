@@ -78,18 +78,12 @@ $ mount /dev/sdX1 /mnt/boot/efi
 # Step 5: Install the necessary packages
 
 ```
-$ pacstrap -i /mnt base base-devel linux-hardened linux-hardened-headers linux-firmware \
-$ openssh networkmanager wpa_supplicant wireless_tools netctl dialog lvm2 grub efibootmgr \
-$ dosfstools mtools nano zsh os-prober wget curl git apparmor unrar unzip cups vim xsane \
-$ sane-gt68xx-firmware sane-frontends ranger zathura w3m xf86-video-intel libva-intel-driver \
-$ mesa mpv vlc libreoffice firefox geeqie gimp electron telegram-desktop transmission-gtk \
-$ rxvt-unicode xscreensaver mutt feh xorg xorg-server xorg-apps xorg-xinit xorg-xclock \
-$ tamsyn-font terminus-font bdf-unifont ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid \
-$ gnu-free-fonts ttf-ibm-plex ttf-liberation ttf-linux-libertine noto-fonts font-bh-ttf \
-$ ttf-roboto tex-gyre-fonts ttf-ubuntu-font-family ttf-anonymous-pro ttf-cascadia-code \
-$ ttf-fantasque-sans-mono ttf-fira-mono ttf-fira-code ttf-hack ttf-inconsolata \
-$ ttf-jetbrains-mono ttf-monofur adobe-source-code-pro-fonts gnu-free-fonts ttf-opensans \
-$ gentium-plus-font ttf-junicode xorg-fonts-type1 otf-latin-modern otf-latinmodern-math
+$ pacstrap -i /mnt base base-devel linux-firmware openssh wpa_supplicant \
+$ wireless_tools netctl dialog lvm2 grub efibootmgr dosfstools mtools zsh \
+$ os-prober wget curl git apparmor unrar unzip cups vim ranger zathura w3m \
+$ xf86-video-amdgpu mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon wine \
+$ libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau steam \
+$ mpv libreoffice chromium geeqie gimp electron telegram-desktop rtorrent \
 ```
 
 # Step 6: chroot into the installation
