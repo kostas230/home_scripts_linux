@@ -1,0 +1,63 @@
+# Font
+fontname 			"DejaVu Sans:size=11"
+
+# Geometry
+borderwidth			2
+snapdist			8
+moveamount			10
+
+# Leave room for lemonbar
+# Adjust the top value to match the bar height
+gap 				28 0 0 0
+
+# Dark theme
+color menubg			"#1e1e1e"
+color menufg			"#d8d8d8"
+color font			"#d8d8d8"
+color selfont			"#ffffff"
+
+color activeborder		"#8ab4f8"
+color inactiveborder		"#444444"
+
+color groupborder		"#8ab4f8"
+color ungroupborder		"#cc6666"
+color urgencyborder		"#ffcc66"
+
+# New windows are not automatically assigned to the current group
+sticky no
+ignore t480bar
+
+## Bind keys
+
+# Applications
+bind-key 	4-b		"/usr/bin/brave"
+bind-key 	4-Return	"/usr/bin/xterm"
+
+# Resize windows
+bind-key 	CM-Left		window-resize-left
+bind-key 	CM-Down		window-resize-down
+bind-key 	CM-Up		window-resize-up
+bind-key 	CM-Right	window-resize-right 
+
+bind-key 	CMS-Left	window-resize-left-big
+bind-key 	CMS-Down	window-resize-down-big
+bind-key 	CMS-Up		window-resize-up-big
+bind-key 	CMS-Right	window-resize-right-big
+
+# Hide & unhide windows
+bind-key	C-m		window-hide
+bind-key	C-u		menu-window-hidden
+
+# Unbind keys
+unbind-key	CM-h
+unbind-key	CM-j
+unbind-key	CM-k
+unbind-key	CM-l
+
+unbind-key 	CMS-h
+unbind-key	CMS-j
+unbind-key	CMS-k
+unbind-key	CMS-l
+
+unbind-key	M-Return
+umbind-mouse	CMS-3
