@@ -1,0 +1,157 @@
+#!/bin/sh
+
+BG="#050805"
+FG="#00cc44"
+
+audio()
+{
+    out=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+
+    if [ -z "$out" ]; then
+        printf 'VOL ?'
+        return
+    fi
+
+    vol=$(printf '%s\n' "$out" |
+        awk '{ printf "%d", $2 * 100 }')
+
+    case "$out" in
+        *MUTED*)
+            printf 'MUTE %s%%' "$vol"
+            ;;
+        *)
+            printf 'VOL %s%%' "$vol"
+            ;;
+    esac
+}
+
+bluetooth()
+{
+    powered=$(bluetoothctl show 2>/dev/null |
+        awk '/Powered:/ { print $2; exit }')
+
+    if [ "$powered" != "yes" ]; then
+        printf 'BT off'
+        return
+    fi
+
+    dev=$(bluetoothctl devices Connected 2>/dev/null |
+        sed -n '1{s/^Device [^ ]* //;p}')
+
+    if [ -n "$dev" ]; then
+        printf 'BT %s' "$dev"
+    else
+        printf 'BT on'
+    fi
+}
+
+battery_one()
+{
+    bat="$1"
+    label="$2"
+
+    if [ ! -d "$bat" ]; then
+        printf '%s --' "$label"
+        return
+    fi
+
+    capacity=$(cat "$bat/capacity" 2>/dev/null)
+    status=$(cat "$bat/status" 2>/dev/null)
+
+    case "$status" in
+        Charging)
+            printf '%s +%s%%' "$label" "$capacity"
+            ;;
+        *)
+            printf '%s %s%%' "$label" "$capacity"
+            ;;
+    esac
+}
+
+battery()
+{
+    battery_one /sys/class/power_supply/BAT0 "INT"
+    printf ' | '
+    battery_one /sys/class/power_supply/BAT1 "EXT"
+}
+
+clock()
+{
+    date '+%a %d %b %H:%M'
+}
+
+generate()
+{
+    while :
+    do
+        printf '%%{l} cwm '
+
+        printf '%%{r}'
+
+        printf '%%{A1:BT_TOGGLE:}'
+        printf '%%{A3:BT_MENU:}'
+        printf ' %s ' "$(bluetooth)"
+        printf '%%{A}%%{A}'
+
+        printf ' | '
+
+        printf '%%{A1:VOL_MUTE:}'
+        printf '%%{A4:VOL_UP:}'
+        printf '%%{A5:VOL_DOWN:}'
+        printf ' %s ' "$(audio)"
+        printf '%%{A}%%{A}%%{A}'
+
+        printf ' | %s' "$(battery)"
+        printf ' | %s ' "$(clock)"
+
+        printf '\n'
+
+        sleep 2
+    done
+}
+
+handle()
+{
+    while read -r event
+    do
+        case "$event" in
+            VOL_MUTE)
+                wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                ;;
+
+            VOL_UP)
+                wpctl set-volume -l 1.0 \
+                    @DEFAULT_AUDIO_SINK@ 5%+
+                ;;
+
+            VOL_DOWN)
+                wpctl set-volume \
+                    @DEFAULT_AUDIO_SINK@ 5%-
+                ;;
+
+            BT_TOGGLE)
+                state=$(bluetoothctl show 2>/dev/null |
+                    awk '/Powered:/ { print $2; exit }')
+
+                if [ "$state" = "yes" ]; then
+                    bluetoothctl power off
+                else
+                    bluetoothctl power on
+                fi
+                ;;
+
+            BT_MENU)
+                xterm -e bluetoothctl &
+                ;;
+        esac
+    done
+}
+
+generate |
+    lemonbar \
+        -p \
+	-n t480bar \
+        -g x24 \
+        -B "$BG" \
+        -F "$FG" |
+    handle
